@@ -1,5 +1,7 @@
-# azureadb2c
-azure mini lib to create resources on Active Directory
+# SH-MassiveUserLoad
+azureADB2C mini lib to create users on a massive load to Active Directory 
+## On development notes
+https://docs.google.com/document/d/1rNVsVUG2Pj3y1eCmDictIBcN-08BIPxPcqvCrUJNB6U/edit
 ## Quick Start
 ### Installation
 ``` $ npm install```
