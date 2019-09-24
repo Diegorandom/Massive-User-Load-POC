@@ -1,0 +1,20 @@
+{
+  "name": "azuretest",
+  "version": "1.0.0",
+  "description": "create users using Azure AD B2C ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jbonilla@tiempodevelopment.com",
+  "license": "ISC",
+  "dependencies": {
+    "adal-node": "^0.1.28",
+    "axios": "^0.19.0",
+    "express": "^4.16.1",
+    "superagent": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
