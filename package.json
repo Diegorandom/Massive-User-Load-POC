@@ -1,12 +1,12 @@
 {
-  "name": "azuretest",
+  "name": "SH-MassiveUserLoad",
   "version": "1.0.0",
-  "description": "create users using Azure AD B2C ",
+  "description": "azureADB2C mini lib to create users on a massive load to Active Directory",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "jbonilla@tiempodevelopment.com",
+  "author": "jbonilla@tiempodevelopment.com, dortega@tiempodevelopment.com",
   "license": "ISC",
   "dependencies": {
     "adal-node": "^0.1.28",

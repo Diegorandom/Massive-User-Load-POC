@@ -1,7 +1,5 @@
 const express = require('express');
 const fs = require('fs');
-const config = require('./config');
-const adal = require('adal-node').AuthenticationContext;
 const azureGraphClient = require('./azureB2cClient');
 const errorResponse = {
 	status : 500,
@@ -10,34 +8,19 @@ const errorResponse = {
 		message: 'Unknown error'
 	}
 };
-
 const createUsers = require('./massiveUsersLoad')
-
-const getToken = () => (new Promise((resolve, reject) => {
-	const context = new adal(`${config.AUTHORITY_HOST_URL}/${config.TENANT}`);
-	context.acquireTokenWithClientCredentials(
-	  config.RESOURCE,
-	  config.CLIENT_ID,
-	  config.CLIENT_SECRET,
-	  (err, tokenResponse) => {
-	    if (err) {
-	      reject(err);
-	    } else {
-		  resolve(tokenResponse);
-		  console.log(tokenResponse)
-	    }
-	  }
-	);
-}))
-
+const tokenCreator = require('./tokenCreator')
 
 const PORT = 8080;
 
 const app = express();
 
 app.get('/', async (req, res)=>{
-	token = await getToken();
-	console.log(token)	
+	tokenCreator.getToken().then(function(token) {
+		console.log(token)	
+		return res.status(200).send(token);
+	});
+	
 })
 
 
@@ -47,7 +30,7 @@ app.post('/createUsers', async (req, res) => {
 
 app.get('/users', async (req, res) => {
 	try {
-		const tokenInfo = await getToken();
+		const tokenInfo = await tokenCreator.getToken();
 		const response = await azureGraphClient.getUsers(tokenInfo.accessToken);
 		return res.status(200).send(response.body);
 	} catch (err) {
@@ -58,7 +41,7 @@ app.get('/users', async (req, res) => {
 
 app.delete('/user/:id', async(req, res) => {
 	try {
-		const tokenInfo = await getToken();
+		const tokenInfo = await tokenCreator.getToken();
 		const response = await azureGraphClient.deleteUser(tokenInfo.accessToken, req.params.id);
 		return res.status(200).send(response);
 	} catch(err) {
@@ -69,7 +52,7 @@ app.delete('/user/:id', async(req, res) => {
 
 app.post('/create', async(req, res) => {
 	try {
-		const tokenInfo = await getToken();
+		const tokenInfo = await tokenCreator.getToken();
 		const payload = {
 			extension_58b4bce74aa94332aade9a6c26960b24_MemberID: "195",
 			streetAddress: "Justo Sierra 2464",

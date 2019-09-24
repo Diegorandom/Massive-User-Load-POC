@@ -11,25 +11,9 @@ const errorResponse = {
 		message: 'Unknown error'
 	}
 };
+const tokenCreator = require('./tokenCreator')
 
 var csv = './test2.csv';
-
-/*Token creation*/
-const getToken = () => (new Promise((resolve, reject) => {
-	const context = new adal(`${config.AUTHORITY_HOST_URL}/${config.TENANT}`);
-	context.acquireTokenWithClientCredentials(
-	  config.RESOURCE,
-	  config.CLIENT_ID,
-	  config.CLIENT_SECRET,
-	  (err, tokenResponse) => {
-	    if (err) {
-	      reject(err);
-	    } else {
-	      resolve(tokenResponse);
-	    }
-	  }
-	);
-}))
 
 /*CSV reading*/
 csvReader = (csv) => {
@@ -93,7 +77,7 @@ createUser = (user, token) =>{
 
 module.exports = {
     main: async () => {
-        const token = await getToken();
+        const token = await tokenCreator.getToken();
         var users = await csvReader(csv); 
         var userQueue = await queue(users);
         userQueue.forEach((user)=> {
