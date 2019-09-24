@@ -1,18 +1,8 @@
 /*Dependeny declaration*/
-const express = require('express');
 const fs = require('fs');
-const config = require('./config');
-const adal = require('adal-node').AuthenticationContext;
 const azureGraphClient = require('./azureB2cClient');
-const errorResponse = {
-	status : 500,
-	message: {
-		statusCode: 500,
-		message: 'Unknown error'
-	}
-};
 const tokenCreator = require('./tokenCreator')
-
+var passCreator = require('./defaultPasswordCreator')
 var csv = './test2.csv';
 
 /*CSV reading*/
@@ -61,7 +51,7 @@ createUser = (user, token) =>{
         }],
         creationType: 'LocalAccount',
         passwordProfile: {
-            password: 'f6k8JdE23.',
+            password: passCreator.password(),
             forceChangePasswordNextLogin: true
         }
     };

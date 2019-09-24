@@ -10,7 +10,7 @@ const errorResponse = {
 };
 const createUsers = require('./massiveUsersLoad')
 const tokenCreator = require('./tokenCreator')
-
+const passCreator = require('./defaultPasswordCreator')
 const PORT = 8080;
 
 const app = express();
@@ -18,6 +18,8 @@ const app = express();
 app.get('/', async (req, res)=>{
 	tokenCreator.getToken().then(function(token) {
 		console.log(token)	
+		pass = passCreator.password();
+		console.log(pass)
 		return res.status(200).send(token);
 	});
 	
