@@ -4,11 +4,11 @@ var queue = async function(bufferData) {
     queue = []
     headers = []
     arrayData = bufferData.toString('utf8').split('\r\n')
-    await arrayData.forEach((rowElement,rowIndex) => {
+    await arrayData.forEach( async(rowElement,rowIndex) => {
         payload = {}
         userData = rowElement.split(',')
         
-        userData.forEach((field, fieldIndex) => {
+        await userData.forEach((field, fieldIndex) => {
             if(rowIndex == 0){
                 headers.push(field)
             }else{
@@ -17,10 +17,7 @@ var queue = async function(bufferData) {
             }
         })
         if(rowIndex != 0){queue.push(payload)}
-        
-        if(arrayData.length == rowIndex+1){
-            return queue
-        }  
+        return queue
     });
     console.log(queue)
     return queue
