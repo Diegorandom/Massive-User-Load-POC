@@ -7,6 +7,7 @@ var csvReader = require('./loadComponents/csvReading')
 
 /* Create user */
 createUser = async (user, token, resolve) =>{
+    //console.log('OTHER MAILS: ' , user.otherMails)
     const cleanEmail = user.email.replace('\r', '');
     const payload = {
         accountEnabled: true,
@@ -14,13 +15,12 @@ createUser = async (user, token, resolve) =>{
         country: user.country,
         DoB: user.dateOfBirth,
         displayName: `${user.name}${user.lastName}`,
-        //otherMails: user.emailAddresses,
+        otherMails: user.otherMails,
         //memberId: `${user.memberId}`,
         postalCode: `${user.postalCode}`,
         state: user.state,
         streetAddress: user.streetAddress,
         surname: user.surname,
-        emailAddresses = [],
         givenName: user.name,
         signInNames: [{
             type: 'emailAddress',
@@ -36,7 +36,7 @@ createUser = async (user, token, resolve) =>{
     try {
         console.log("Payload sent:", payload);
         response = await azureGraphClient.createUser(token.accessToken, payload);
-        console.log(response)
+        //console.log(response)
         resolve(response);
         
 	} catch (err) {

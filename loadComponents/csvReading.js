@@ -21,7 +21,13 @@ build = (rowValues, columnHeaders) => {
 
         const payload = {};
         columnHeaders.forEach((field, index) => {
+            if(field == 'otherMails') {
+                const otherMails = values[index].replace('\r', '').split("-");
+                payload[field] = otherMails;
+            }
+            else {
                 payload[field] = values[index] !== undefined ? values[index] : '';
+            }
         }); 
 
         return payload;
@@ -39,7 +45,7 @@ var csvReader = async (csv) => {
 
 var main = async ()=> {
     try {
-        var  bufferData = await csvReader('./loadComponents/test2.csv');
+        var  bufferData = await csvReader('./loadComponents/test3.csv');
         var userQueue = await queue(bufferData)
         return userQueue
     }
