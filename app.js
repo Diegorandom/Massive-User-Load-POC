@@ -26,7 +26,7 @@ app.get('/', async (req, res)=>{
 
 
 app.post('/createUsers', async (req, res) => {
-    createUsers.main();
+    createUsers.main(res);
 });
 
 app.get('/users', async (req, res) => {

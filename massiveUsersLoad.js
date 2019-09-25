@@ -6,27 +6,24 @@ var passCreator = require('./defaultPasswordCreator')
 var csvReader = require('./loadComponents/csvReading')
 
 /* Create user */
-createUser = (user, token) =>{
-    const cleanSurname = user.surname.replace('\r', '');
-
+createUser = async (user, token, resolve) =>{
+    const cleanEmail = user.email.replace('\r', '');
     const payload = {
         accountEnabled: true,
         city: user.city,
         country: user.country,
         DoB: user.dateOfBirth,
-        displayName: `${user.name} ${user.lastName}`,
-        otherMails: user.emailAddresses,
-        givenName: user.givenName,
-        jobTitle: user.jobTitle,
-        mailNickName: `${user.nickName}`,
-        memberId: `${user.memberId}`,
+        displayName: `${user.name}${user.lastName}`,
+        //otherMails: user.emailAddresses,
+        //memberId: `${user.memberId}`,
         postalCode: `${user.postalCode}`,
         state: user.state,
         streetAddress: user.streetAddress,
-        surname: cleanSurname,
+        surname: user.surname,
+        emailAddresses = [],
         signInNames: [{
             type: 'emailAddress',
-            value: user.email
+            value: cleanEmail
         }],
         creationType: 'LocalAccount',
         passwordProfile: {
@@ -36,8 +33,10 @@ createUser = (user, token) =>{
     };
 
     try {
-        console.log(payload);
-        return response =  azureGraphClient.createUser(token, payload);
+        console.log("Payload sent:", payload);
+        response = await azureGraphClient.createUser(token.accessToken, payload);
+        console.log(response)
+        resolve(response);
         
 	} catch (err) {
 		console.log(err.response.body);
@@ -45,14 +44,17 @@ createUser = (user, token) =>{
 }
 
 module.exports = {
-    main: async () => {
-        //const token = await tokenCreator.getToken();
+    main: async (res) => {
+        const token = await tokenCreator.getToken();
         var userQueue = await csvReader.main();
-        console.log(userQueue) 
-       /* userQueue.forEach((user)=> {
-            response = createUser(user, token)
-            console.log(response);
-            return res.status(200).send(response.body);
-        });*/
+        let requests = userQueue.map((user)=>{
+            return new Promise((resolve) => {
+                createUser(user, token, resolve)
+              });
+        });
+        Promise.all(requests).then((responses) => {
+            return res.status(200).send(responses);
+        });
+        
     }
 }

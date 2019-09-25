@@ -1,37 +1,47 @@
 const fs = require('fs');
 
-var queue = async function(bufferData) {
+var queue = async (bufferData)=> {
+    const rowValues = bufferData.toString('utf8').split('\n').slice(1);
+    const columnHeaders = bufferData.toString('utf8').split('\n')[0].replace(/\n|\r/g, "").split(',');
     queue = []
-    headers = []
-    arrayData = bufferData.toString('utf8').split('\r\n')
-    await arrayData.forEach( async(rowElement,rowIndex) => {
-        payload = {}
-        userData = rowElement.split(',')
-        
-        await userData.forEach((field, fieldIndex) => {
-            if(rowIndex == 0){
-                headers.push(field)
-            }else{
-                payload[headers[fieldIndex]] = userData[fieldIndex]
-                //needs to trim blank lines at the end of the csv
-            }
-        })
-        if(rowIndex != 0){queue.push(payload)}
-        return queue
+    rowValues.forEach((value, index) => {
+        const userEntity = build(value, columnHeaders);
+        if (userEntity) {
+            queue.push(userEntity);
+        }
     });
-    console.log(queue)
-    return queue
+    return queue;
+}
+
+
+/*User Build*/
+build = (rowValues, columnHeaders) => {  
+    const values = rowValues.split(','); 
+    if (values.indexOf(undefined) == -1) {
+
+        const payload = {};
+        columnHeaders.forEach((field, index) => {
+                payload[field] = values[index] !== undefined ? values[index] : '';
+        }); 
+
+        return payload;
+    }
+    else {
+        return null
+    }
 }
 
 /*CSV reading*/
-var csvReader = (csv) => {
-    bufferData = fs.readFileSync(csv) 
-    return queue(bufferData)
+var csvReader = async (csv) => {
+    const bufferData = fs.readFileSync(csv);
+    return  bufferData
 }
 
-var main = async function() {
-    try{
-        var queue = await csvReader('./loadComponents/test2.csv');
+var main = async ()=> {
+    try {
+        var  bufferData = await csvReader('./loadComponents/test2.csv');
+        var userQueue = await queue(bufferData)
+        return userQueue
     }
     catch(error){
         console.log(error)
@@ -44,15 +54,5 @@ var main = async function() {
 main();
 
 module.exports = {
-    main: async function() {
-        try{
-            var queue = await csvReader('./loadComponents/test2.csv');
-        }
-        catch(error){
-            console.log(error)
-        }
-        finally{
-            return queue
-        }
-    } 
+    main: main
 }

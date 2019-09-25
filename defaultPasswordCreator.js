@@ -4,8 +4,10 @@ var generator = require('generate-password');
 module.exports = {
     password:() => { 
         var password = generator.generate({
-            length: 10,
-            numbers: true
+            length: 15,
+            numbers: true,
+            symbols: true,
+            uppercase: true
         });
         return password
     }
