@@ -1,41 +1,61 @@
 const fs = require('fs');
 
-/*CSV reading*/
-csvReader = (csv) => {
-    fs.readFile(csv, (err, bufferData) => {
-        queue = []
-        headers = []
-        arrayData = bufferData.toString('utf8').split('\r\n')
-        arrayData.forEach((rowElement,rowIndex) => {
-            payload = {}
-            userData = rowElement.split(',')
-            
-            userData.forEach((field, fieldIndex) => {
-                if(rowIndex == 0){
-                    headers.push(field)
-                }else{
-                    payload[headers[fieldIndex]] = userData[fieldIndex]
-                    //needs to trim blank lines at the end of the csv
-                }
-            })
-            if(rowIndex != 0){queue.push(payload)}
-            
-            if(arrayData.length == rowIndex+1){
-                console.log(queue)
-                return queue
-            }  
-        });
-
+var queue = async function(bufferData) {
+    queue = []
+    headers = []
+    arrayData = bufferData.toString('utf8').split('\r\n')
+    await arrayData.forEach((rowElement,rowIndex) => {
+        payload = {}
+        userData = rowElement.split(',')
+        
+        userData.forEach((field, fieldIndex) => {
+            if(rowIndex == 0){
+                headers.push(field)
+            }else{
+                payload[headers[fieldIndex]] = userData[fieldIndex]
+                //needs to trim blank lines at the end of the csv
+            }
+        })
+        if(rowIndex != 0){queue.push(payload)}
+        
+        if(arrayData.length == rowIndex+1){
+            return queue
+        }  
     });
+    console.log(queue)
+    return queue
 }
 
-main = async() => {
-    var csv = './test2.csv';
-    var users = await csvReader(csv); 
+/*CSV reading*/
+var csvReader = (csv) => {
+    bufferData = fs.readFileSync(csv) 
+    return queue(bufferData)
+}
+
+var main = async function() {
+    try{
+        var queue = await csvReader('./loadComponents/test2.csv');
+    }
+    catch(error){
+        console.log(error)
+    }
+    finally{
+        return queue
+    }
 } 
 
 main();
 
 module.exports = {
-    csvReader: this.csvReader
+    main: async function() {
+        try{
+            var queue = await csvReader('./loadComponents/test2.csv');
+        }
+        catch(error){
+            console.log(error)
+        }
+        finally{
+            return queue
+        }
+    } 
 }

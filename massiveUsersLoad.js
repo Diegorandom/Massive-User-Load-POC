@@ -3,20 +3,7 @@ const fs = require('fs');
 const azureGraphClient = require('./azureB2cClient');
 const tokenCreator = require('./tokenCreator')
 var passCreator = require('./defaultPasswordCreator')
-
-/* User Queue */
-queue = (users) => {
-    const queue = [];
-    users.forEach((user, index) => {
-        const userEntity = desctruct(user);
-        if (userEntity) {
-            queue.push(userEntity);
-        }
-    }).then(()=>{
-        return queue
-    });
-  
-}
+var csvReader = require('./loadComponents/csvReading')
 
 /* Create user */
 createUser = (user, token) =>{
@@ -59,13 +46,13 @@ createUser = (user, token) =>{
 
 module.exports = {
     main: async () => {
-        const token = await tokenCreator.getToken();
-        var users = await csvReader(csv); 
-        var userQueue = await queue(users);
-        userQueue.forEach((user)=> {
+        //const token = await tokenCreator.getToken();
+        var userQueue = await csvReader.main();
+        console.log(userQueue) 
+       /* userQueue.forEach((user)=> {
             response = createUser(user, token)
             console.log(response);
             return res.status(200).send(response.body);
-        });
+        });*/
     }
 }
