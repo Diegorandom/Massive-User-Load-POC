@@ -21,6 +21,7 @@ createUser = async (user, token, resolve) =>{
         streetAddress: user.streetAddress,
         surname: user.surname,
         emailAddresses = [],
+        givenName: user.name,
         signInNames: [{
             type: 'emailAddress',
             value: cleanEmail
