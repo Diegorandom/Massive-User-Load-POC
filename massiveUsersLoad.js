@@ -3,14 +3,6 @@ const fs = require('fs');
 const azureGraphClient = require('./azureB2cClient');
 const tokenCreator = require('./tokenCreator')
 var passCreator = require('./defaultPasswordCreator')
-var csv = './test2.csv';
-
-/*CSV reading*/
-csvReader = (csv) => {
-    fs.readFile(csv, (err, bufferData) => {
-        return users = bufferData.toString('utf8').split('\n').splice(1,1);
-    });
-}
 
 /* User Queue */
 queue = (users) => {

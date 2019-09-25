@@ -1,5 +1,4 @@
 const express = require('express');
-const fs = require('fs');
 const azureGraphClient = require('./azureB2cClient');
 const errorResponse = {
 	status : 500,

@@ -15,7 +15,6 @@ var getToken = function(){
               reject(err);
             } else {
               resolve(tokenResponse);
-              console.log(tokenResponse)
             }
           }
         );
