@@ -8,6 +8,7 @@ const errorResponse = {
 	}
 };
 const createUsers = require('./massiveUsersLoad')
+const updateUsers = require('./loadComponents/updateUsers')
 const tokenCreator = require('./loadComponents/tokenCreator')
 const passCreator = require('./loadComponents/defaultPasswordCreator')
 const PORT = 8080;
@@ -28,6 +29,10 @@ app.get('/', async (req, res)=>{
 app.post('/createUsers', async (req, res) => {
     createUsers.main(res);
 });
+
+app.put('/updateUsers', async (req, res)=>{
+	updateUsers.main(res)
+})
 
 app.get('/users', async (req, res) => {
 	try {

@@ -1,12 +1,11 @@
 /*Dependeny declaration*/
-const azureGraphClient = require('./azureB2cClient');
-const tokenCreator = require('./loadComponents/tokenCreator')
-var passCreator = require('./loadComponents/defaultPasswordCreator')
-var csvReader = require('./loadComponents/csvReading');
-const config = require('./config');
+const azureGraphClient = require('../azureB2cClient');
+const tokenCreator = require('./tokenCreator')
+var passCreator = require('./defaultPasswordCreator')
+var csvReader = require('./csvReading');
+const config = require('../config');
 
-/* Create user */
-createUser = async (user, token, resolve, reject) =>{
+updateUser = async (user, token, resolve) =>{
     const cleanApplicationClientID = config.APPLICATION_CLIENT_ID.replace("-", "");
     const memberIdProp = 'extension_' + cleanApplicationClientID + '_MemberID';
     const dateOfBirthProp = 'extension_' + cleanApplicationClientID + '_DateOfBirth';
@@ -44,11 +43,11 @@ createUser = async (user, token, resolve, reject) =>{
     console.log('PAYLOD MEMBER: ' , payload);
     try {
         console.log("Payload sent:", payload);
-        response = await azureGraphClient.createUser(token.accessToken, payload);
+        response = await azureGraphClient.updateUser(token.accessToken, payload);
         resolve(response);
         
 	} catch (err) {
-        reject(err.response)
+		console.log(err);
 	}
 }
 
@@ -57,8 +56,8 @@ module.exports = {
         const token = await tokenCreator.getToken();
         var userQueue = await csvReader.main();
         let requests = userQueue.map((user)=>{
-            return new Promise((reject, resolve) => {
-                createUser(user, token, resolve, reject)
+            return new Promise((resolve) => {
+                updateUser(user, token, resolve)
               });
         });
         Promise.all(requests).then((responses) => {

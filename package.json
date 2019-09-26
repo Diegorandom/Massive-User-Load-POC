@@ -1,5 +1,5 @@
 {
-  "name": "SH-MassiveUserLoad",
+  "name": "SHMassiveUserLoad",
   "version": "1.0.0",
   "description": "azureADB2C mini lib to create users on a massive load to Active Directory",
   "main": "app.js",
