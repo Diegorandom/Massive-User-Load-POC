@@ -6,7 +6,7 @@ var csvReader = require('./loadComponents/csvReading');
 const config = require('./config');
 
 /* Create user */
-createUser = async (user, token, resolve, reject) =>{
+createUser = async (user, token, resolve) =>{
     const cleanApplicationClientID = config.APPLICATION_CLIENT_ID.replace("-", "");
     const memberIdProp = 'extension_' + cleanApplicationClientID + '_MemberID';
     const dateOfBirthProp = 'extension_' + cleanApplicationClientID + '_DateOfBirth';
@@ -48,7 +48,8 @@ createUser = async (user, token, resolve, reject) =>{
         resolve(response);
         
 	} catch (err) {
-        reject(err.response)
+        console.log(err.response.body);
+        resolve(err)
 	}
 }
 
@@ -57,8 +58,8 @@ module.exports = {
         const token = await tokenCreator.getToken();
         var userQueue = await csvReader.main();
         let requests = userQueue.map((user)=>{
-            return new Promise((reject, resolve) => {
-                createUser(user, token, resolve, reject)
+            return new Promise((resolve) => {
+                createUser(user, token, resolve)
               });
         });
         Promise.all(requests).then((responses) => {

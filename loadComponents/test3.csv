@@ -1,4 +1,2 @@
-name,lastName,email,otherMails,memberId,dateOfBirth,streerAddress2,phoneNumber
-josefa,bonillaaa,jbonilla2345616@tiempodevelopment.com,link@gmail.com-otracosa@gmail.com-cosanueva@gmail.com,993,11/20/1988,ave lomas,55-40-345-60
-lailala,bonilllo,marcosss62361635860@tiempodevelopment.com,link@gmail.com-otracosa@gmail.com-cosanueva@gmail.com,082,11/20/1988,ave lomas,55-40-345-60
-josiaca,monillaa,davilaaa09090909@tiempodevelopment.com,link@gmail.com-otracosa@gmail.com-cosanueva@gmail.com,235,11/20/1988,ave lomas,55-40-345-60
+name,lastName,email,otherMails,memberId,dateOfBirth,streetAddress2,phoneNumber,city,country,state,streetAddress,surname,postalCode
+Alex,LanderOxXx,testmember.sh@gmail.com,link@gmail.com-otracosa@gmail.com-cosanueva@gmail.com,401029583,11/20/1988,ave lomas,55-40-345-60,GDL,MX,Jalisco,Justo Sierra 2464,Landero,98765

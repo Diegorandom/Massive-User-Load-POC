@@ -30,9 +30,9 @@ app.post('/createUsers', async (req, res) => {
     createUsers.main(res);
 });
 
-app.put('/updateUsers', async (req, res)=>{
+app.patch('/updateUsers', async (req, res)=>{
 	updateUsers.main(res)
-})
+});
 
 app.get('/users', async (req, res) => {
 	try {

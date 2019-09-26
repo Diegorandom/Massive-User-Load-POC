@@ -5,7 +5,7 @@ const apiVersion = 'api-version=1.6';
 const graphAPIRoute = `${azureGraphEndpoint}?${apiVersion}`;
 const authorizationHeader = 'Authorization';
 /*Update*/
-const updateAzureGraphEndpoint = `${config.RESOURCE}/${config.TENANT}/me`;
+const updateAzureGraphEndpoint = `${config.RESOURCE}/me`;
 const UpdateGraphAPIRoute = `${updateAzureGraphEndpoint}?${apiVersion}`;
 
 module.exports = (() => {
@@ -21,7 +21,7 @@ module.exports = (() => {
 			superagent.delete(`${azureGraphEndpoint}/${userId}?${apiVersion}`)
 				.set(authorizationHeader, `Bearer ${accessToken}`),
 		updateUser: (accessToken, body) =>{
-			superagent.put(UpdateGraphAPIRoute)
+			superagent.patch(UpdateGraphAPIRoute)
 			.set(authorizationHeader, `Bearer ${accessToken}`)
 			.send(body)
 		}		

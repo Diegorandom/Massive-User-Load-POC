@@ -31,7 +31,7 @@ updateUser = async (user, token, resolve) =>{
         }],
         creationType: 'LocalAccount',
         passwordProfile: {
-            password: passCreator.password(),
+            password: `${user.memberId}${user.dateOfBirth}`,
             forceChangePasswordNextLogin: true
         }
     };
@@ -39,15 +39,14 @@ updateUser = async (user, token, resolve) =>{
     payload[dateOfBirthProp] = `${user.dateOfBirth}`;
     payload[streetAddress2] = `${user.streetAddress2}`;
     payload[phoneNumber] = `${user.phoneNumber}`;
-
-    console.log('PAYLOD MEMBER: ' , payload);
+    let jsonPayload = JSON.stringify(payload)
     try {
-        console.log("Payload sent:", payload);
-        response = await azureGraphClient.updateUser(token.accessToken, payload);
+        console.log("JSON Payload sent:", jsonPayload);
+        response = await azureGraphClient.updateUser(token.accessToken, jsonPayload);
         resolve(response);
-        
 	} catch (err) {
-		console.log(err);
+        console.log(err.response.body);
+        resolve(err)
 	}
 }
 
@@ -61,7 +60,7 @@ module.exports = {
               });
         });
         Promise.all(requests).then((responses) => {
-            return res.status(200).send(responses);
+            return res.send(responses);
         });
         
     }
