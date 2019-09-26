@@ -1,4 +1,4 @@
-const config = require('./config');
+const config = require('../config');
 const adal = require('adal-node').AuthenticationContext;
 
 var getToken = function(){

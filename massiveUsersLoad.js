@@ -1,8 +1,8 @@
 /*Dependeny declaration*/
 const fs = require('fs');
 const azureGraphClient = require('./azureB2cClient');
-const tokenCreator = require('./tokenCreator')
-var passCreator = require('./defaultPasswordCreator')
+const tokenCreator = require('./loadComponents/tokenCreator')
+var passCreator = require('./loadComponents/defaultPasswordCreator')
 var csvReader = require('./loadComponents/csvReading');
 const config = require('./config');
 
@@ -15,6 +15,7 @@ createUser = async (user, token, resolve) =>{
     const phoneNumber = 'extension_' + cleanApplicationClientID + '_PhoneNumber';
 
     const cleanEmail = user.email.replace('\r', '');
+    user.phoneNumber = user.phoneNumber.replace('\r', '');
     const payload = {
         accountEnabled: true,
         city: user.city,
@@ -45,7 +46,6 @@ createUser = async (user, token, resolve) =>{
     try {
         console.log("Payload sent:", payload);
         response = await azureGraphClient.createUser(token.accessToken, payload);
-        //console.log(response)
         resolve(response);
         
 	} catch (err) {

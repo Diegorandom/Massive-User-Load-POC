@@ -8,8 +8,8 @@ const errorResponse = {
 	}
 };
 const createUsers = require('./massiveUsersLoad')
-const tokenCreator = require('./tokenCreator')
-const passCreator = require('./defaultPasswordCreator')
+const tokenCreator = require('./loadComponents/tokenCreator')
+const passCreator = require('./loadComponents/defaultPasswordCreator')
 const PORT = 8080;
 
 const app = express();
