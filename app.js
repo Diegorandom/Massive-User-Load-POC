@@ -11,7 +11,7 @@ const errorResponse = {
 const createUsers = require('./massiveUsersLoad')
 const updateUsers = require('./loadComponents/updateUsers')
 const tokenCreator = require('./loadComponents/tokenCreator')
-const microsoftTokenCreator = require('./loadComponents/tokenCreator')
+const microsoftTokenCreator = require('./loadComponents/microsoftToken')
 const passCreator = require('./loadComponents/defaultPasswordCreator')
 const PORT = 8080;
 

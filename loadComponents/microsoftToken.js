@@ -1,13 +1,15 @@
 const config = require('../config');
-
+const Msal = require('msal')
 var msalConfig = {
         auth: {
             clientId: config.CLIENT_ID
-        }
+        },
+        cache: {
+            cacheLocation:  "localStorage",
+            storeAuthStateInCookie: false
+          }
     };
  
-    
-
     var getToken = function(){
         return new Promise( function(resolve, reject) {
                 console.log("creating Token")
@@ -18,7 +20,8 @@ var msalConfig = {
                         console.log("error:", error)
                         reject(err);
                       } else {
-                        resolve(response.accessToken)
+                        console.log(response)
+                        resolve(response)
                       }
                 })
         })

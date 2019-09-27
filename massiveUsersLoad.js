@@ -35,7 +35,7 @@ createUser = async (user, token, resolve) =>{
             password: `${user.memberId}${user.dateOfBirth}` + user.surname.substring(0,2).toUpperCase(),
             forceChangePasswordNextLogin: true
         },
-        userType: 'Guest'
+        userType: 'Guest',
     };
     payload[memberIdProp] = `${user.memberId}`;
     payload[dateOfBirthProp] = `${user.dateOfBirth}`;

@@ -1,11 +1,12 @@
 const superagent = require('superagent');
 const config =  require('./config');
-const azureGraphEndpoint = `${config.RESOURCE_MICROSOFT_API}/${config.TENANT}/V1.0/`;
+const azureGraphEndpoint = `${config.RESOURCE_MICROSOFT_API}v1.0/`;
 const authorizationHeader = 'Authorization';
+console.log(azureGraphEndpoint + "invitations")
 module.exports = (() => {
 	return {
         sendInvitations: (accessToken, body) =>
-            superagent.get(azureGraphEndpoint + "invitations")
+            superagent.post(azureGraphEndpoint + "invitations")
             .set(authorizationHeader, `Bearer ${accessToken}`)
                 .send(body)	
 	}
