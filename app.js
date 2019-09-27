@@ -1,5 +1,6 @@
 const express = require('express');
 const azureGraphClient = require('./azureB2cClient');
+const microsoftGraphClient = require('./microsoftGraphClient');
 const errorResponse = {
 	status : 500,
 	message: {
@@ -10,6 +11,7 @@ const errorResponse = {
 const createUsers = require('./massiveUsersLoad')
 const updateUsers = require('./loadComponents/updateUsers')
 const tokenCreator = require('./loadComponents/tokenCreator')
+const microsoftTokenCreator = require('./loadComponents/tokenCreator')
 const passCreator = require('./loadComponents/defaultPasswordCreator')
 const PORT = 8080;
 
@@ -83,6 +85,24 @@ app.post('/create', async(req, res) => {
 		return res.status(err.status || errorResponse.status).send(error);
 	}
 });
+
+app.post('/invite', async(req,res)=>{
+	try {
+		const tokenInfo = await microsoftTokenCreator.getToken();
+		const payload = {
+			"invitedUserEmailAddress": "dortega@tiempodevelopment.com",
+			"sendInvitationMessage": true,
+			"inviteRedirectUrl": "https://mcpuat01.azurewebsites.net"
+		  }
+		console.log(tokenInfo)
+		const response = await microsoftGraphClient.sendInvitations(tokenInfo.accessToken, payload);
+		return res.status(200).send(response);
+	} catch(err) {
+		console.log(err)
+		const error = (err.response && err.response.body) ? err.response.body : errorResponse.message;
+		return res.status(err.status || errorResponse.status).send(error);
+	}
+})
 
 app.use((req, res) => {
 		res.status(404).send('NOT FOUND');

@@ -27,21 +27,20 @@ createUser = async (user, token, resolve) =>{
         surname: user.surname,
         givenName: user.name,
         signInNames: [{
-            type: 'emailAddress',
+            type: 'email',
             value: cleanEmail
         }],
-        creationType: 'LocalAccount',
+        creationType: 'Invitation',
         passwordProfile: {
-            password: passCreator.password(),
+            password: `${user.memberId}${user.dateOfBirth}` + user.surname.substring(0,2).toUpperCase(),
             forceChangePasswordNextLogin: true
-        }
+        },
+        userType: 'Guest'
     };
     payload[memberIdProp] = `${user.memberId}`;
     payload[dateOfBirthProp] = `${user.dateOfBirth}`;
     payload[streetAddress2] = `${user.streetAddress2}`;
     payload[phoneNumber] = `${user.phoneNumber}`;
-
-    console.log('PAYLOD MEMBER: ' , payload);
     try {
         console.log("Payload sent:", payload);
         response = await azureGraphClient.createUser(token.accessToken, payload);
