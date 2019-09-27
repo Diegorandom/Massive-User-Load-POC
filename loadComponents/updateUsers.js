@@ -42,10 +42,10 @@ updateUser = async (user, token, resolve) =>{
     let jsonPayload = JSON.stringify(payload)
     try {
         console.log("JSON Payload sent:", jsonPayload);
-        response = await azureGraphClient.updateUser(token.accessToken, jsonPayload);
+        response = azureGraphClient.updateUser(token.accessToken, jsonPayload);
         resolve(response);
 	} catch (err) {
-        console.log(err.response.body);
+        console.log(err);
         resolve(err)
 	}
 }
