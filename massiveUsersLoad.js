@@ -12,6 +12,7 @@ createUser = async (user, token, resolve) =>{
     const dateOfBirthProp = 'extension_' + cleanApplicationClientID + '_DateOfBirth';
     const streetAddress2 = 'extension_' + cleanApplicationClientID + '_StreetAddress2';
     const phoneNumber = 'extension_' + cleanApplicationClientID + '_PhoneNumber';
+    const otherMails = 'otherMails';
 
     const cleanEmail = user.email.replace('\r', '');
     user.phoneNumber = user.phoneNumber.replace('\r', '');
@@ -21,14 +22,17 @@ createUser = async (user, token, resolve) =>{
         city: user.city,
         country: user.country,
         displayName: `${user.name} ${user.lastName}`,
-        otherMails: user.otherMails,
         postalCode: `${user.postalCode}`,
         state: user.state,
         streetAddress: user.streetAddress,
         surname: user.surname,
         givenName: user.name,
+        mail: null,
+        mobile: null,
+        facsimileTelephoneNumber: null,
+        preferredLanguage: null,
         signInNames: [{
-            type: 'email',
+            type: 'emailAddress',
             value: cleanEmail
         }],
         creationType: 'LocalAccount',
@@ -37,14 +41,21 @@ createUser = async (user, token, resolve) =>{
             forceChangePasswordNextLogin: false
         },
         passwordPolicies: "DisablePasswordExpiration",
-        userType: 'Guest',
+        telephoneNumber: null
     };
+    
+    //console.log('OTHER EMAILS: ', user.otherMails);
+
+    if(user.otherMails !== undefined && user.otherMails.length >= 0) {
+        payload[otherMails] = user.otherMails;
+    }
+
     payload[memberIdProp] = `${user.memberId}`;
     payload[dateOfBirthProp] = `${user.dateOfBirth}`;
     payload[streetAddress2] = `${user.streetAddress2}`;
     payload[phoneNumber] = `${user.phoneNumber}`;
     try {
-        console.log("Payload sent:", payload);
+        console.log("Payload to be sent:", payload);
         response = await azureGraphClient.createUser(token.accessToken, payload);
         resolve(response);
         

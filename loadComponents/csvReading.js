@@ -21,15 +21,22 @@ build = (rowValues, columnHeaders) => {
 
         const payload = {};
         columnHeaders.forEach((field, index) => {
+            
             if(field == 'otherMails') {
-                const otherMails = values[index].replace('\r', '').split("-");
-                payload[field] = otherMails;
+                if(values[index] !== '') {
+                    const otherMails = values[index].replace('\r', '').split("-");
+                    payload[field] = otherMails;
+                } 
+                else {
+                    payload[field] = [];
+                }
+                
             }
             else {
-                payload[field] = values[index] !== undefined ? values[index] : '';
+                payload[field] = values[index] !== undefined ? values[index] : null;
             }
         }); 
-
+        console.log("PAYLOAD :" , payload);
         return payload;
     }
     else {
