@@ -16,6 +16,7 @@ createUser = async (user, token, resolve) =>{
     const cleanEmail = user.email.replace('\r', '');
     user.phoneNumber = user.phoneNumber.replace('\r', '');
     const payload = {
+        mailNickname: user.name + user.surname.substring(0,2).toUpperCase(),
         accountEnabled: true,
         city: user.city,
         country: user.country,
@@ -30,11 +31,12 @@ createUser = async (user, token, resolve) =>{
             type: 'email',
             value: cleanEmail
         }],
-        creationType: 'Invitation',
+        creationType: 'LocalAccount',
         passwordProfile: {
             password: `${user.memberId}${user.dateOfBirth}` + user.surname.substring(0,2).toUpperCase(),
-            forceChangePasswordNextLogin: true
+            forceChangePasswordNextLogin: false
         },
+        passwordPolicies: "DisablePasswordExpiration",
         userType: 'Guest',
     };
     payload[memberIdProp] = `${user.memberId}`;

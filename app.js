@@ -24,7 +24,6 @@ app.get('/', async (req, res)=>{
 		console.log(pass)
 		return res.status(200).send(token);
 	});
-	
 })
 
 
