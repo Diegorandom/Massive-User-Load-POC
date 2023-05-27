@@ -5,7 +5,7 @@ const apiVersion = 'api-version=1.6';
 const graphAPIRoute = `${azureGraphEndpoint}?${apiVersion}`;
 const authorizationHeader = 'Authorization';
 /*Update*/
-const UpdateGraphAPIRoute = `${azureGraphEndpoint}/08948e2c-8f26-4a30-bd8a-415911a463fe?${apiVersion}`;
+const UpdateGraphAPIRoute = `${azureGraphEndpoint}/string${apiVersion}`;
 module.exports = (() => {
 	return {
 		getUsers : (accessToken) =>
