@@ -1,7 +1,6 @@
 # SH-MassiveUserLoad
 azureADB2C mini lib to create users on a massive load to Active Directory 
-## On development notes
-https://docs.google.com/document/d/1rNVsVUG2Pj3y1eCmDictIBcN-08BIPxPcqvCrUJNB6U/edit
+
 ## Quick Start
 ### Installation
 ``` $ npm install```
@@ -70,7 +69,7 @@ There are more field on the response due to readability were reduced.
 ```JSON
 Status Code: 200
 {
-	"odata.metadata": "https://graph.windows.net/cb543ade-59f2-4bf3-9a66-6ff062cb7867/$metadata#directoryObjects",
+	"odata.metadata": "URL",
     "value": [
         {
             "odata.type": "Microsoft.DirectoryServices.User",
