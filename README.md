@@ -122,9 +122,9 @@ POST http://localhost:8080/create
     ],
     "creationType": "LocalAccount",
     "displayName": "Jon Snow",
-    "mailNickname": "joec",
+    "mailNickname": "",
     "passwordProfile": {
-      "password": "f6kg5Rt23.",
+      "password": "",
       "forceChangePasswordNextLogin": false
     }
 }
@@ -136,10 +136,10 @@ There are more field on the response due to readability were reduced.
 Status Code: 201
 
 {
-  "odata.metadata": "https://graph.windows.net/myorganization/$metadata#directoryObjects/Microsoft.DirectoryServices.User/@Element",
+  "odata.metadata": "url",
   "odata.type": "Microsoft.DirectoryServices.User",
   "objectType": "User",
-  "objectId": "84fba1e8-b942-47c9-a10e-a4bee353ce60",
+  "objectId": "url",
   "deletionTimestamp": null,
   "accountEnabled": true,
   "signInNames": [
@@ -185,7 +185,7 @@ Delete a user by id
 Param        | Type   | In           | Required?  | Description
 ---          | ---    | ---          | ---        | ---
 access_token | String | query/header | true       | Internally created
-id | String | query | true       | The user ID. Can be the object ID (GUID) or the user principal name (someuser@a830edad9050849NDA1.onmicrosoft.com) of the target user.
+id | String | query | true       | The user ID. Can be the object ID (GUID) or the user principal name (email) of the target user.
 
 
 ***Sample Request:***
