@@ -1,12 +1,12 @@
 {
-  "name": "SHMassiveUserLoad",
+  "name": "MassiveUserLoad",
   "version": "1.0.0",
   "description": "azureADB2C mini lib to create users on a massive load to Active Directory",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "jbonilla@tiempodevelopment.com, dortega@tiempodevelopment.com",
+  "author": "diegortegaimi@gmail.com",
   "license": "ISC",
   "dependencies": {
     "adal-node": "^0.1.28",
