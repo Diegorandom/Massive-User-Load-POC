@@ -66,13 +66,13 @@ app.post('/create', async(req, res) => {
 			accountEnabled: true,
 			signInNames: [{
 				type:'email',
-				value: 'dortega@tiempodevelop.com'//email
+				value: ''//email
 			}],
 			creationType: 'LocalAccount',
-			displayName: 'AlejandroLandero',
-			mailNickName: 'newUser123',
+			displayName: '',
+			mailNickName: '',
 			passwordProfile: {
-				password: 'f6k8JdE23.',
+				password: '',
       			forceChangePasswordNextLogin: true
 			} 
 		};
@@ -89,9 +89,9 @@ app.post('/invite', async(req,res)=>{
 	try {
 		const tokenInfo = await microsoftTokenCreator.getToken();
 		const payload = {
-			"invitedUserEmailAddress": "dortega@tiempodevelopment.com",
+			"invitedUserEmailAddress": "",
 			"sendInvitationMessage": true,
-			"inviteRedirectUrl": "https://mcpuat01.azurewebsites.net"
+			"inviteRedirectUrl": ""
 		  }
 		console.log(tokenInfo)
 		const response = await microsoftGraphClient.sendInvitations(tokenInfo.accessToken, payload);
