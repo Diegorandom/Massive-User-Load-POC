@@ -9,7 +9,7 @@ const build = (rowValues, columnHeaders) => {
         columnHeaders.forEach((field, index) => {
             if (field == 'otherMails') {
                 if (values[index] !== '') {
-                    const otherMails = SqlString.escape(values[index].replace('\r', '').split('-'))
+                    const otherMails = SqlString.escape(values[index].replace('\r', '')).split('-')
                     payload[field] = otherMails
                 } else {
                     payload[field] = []
