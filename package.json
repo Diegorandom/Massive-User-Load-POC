@@ -17,6 +17,7 @@
     "superagent": "^8.0.9"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "sqlstring": "^2.3.3"
   }
 }
