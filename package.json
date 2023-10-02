@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "adal-node": "^0.2.4",
-    "axios": "^1.4.0",
+    "axios": "^1.5.1",
     "express": "^4.18.2",
     "generate-password": "^1.7.0",
     "msal": "^1.4.18",
